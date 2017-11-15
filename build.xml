@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project name="BuildObject">
+
+    <property name="cxf.home" value="C:\Program Files\Apache Software Foundation\apache-cxf-3.2.0"/>
+
+    <path id="cxf.classpath">
+        <fileset dir="${cxf.home}/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="cxfWSDLToJava">
+        <java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+            <arg value="-verbose"/>
+            <arg value="-d"/>
+            <arg value="src/main/java"/>
+            <arg value="src/main/resources/MedvedServiceClient.wsdl"/>
+            <classpath>
+                <path refid="cxf.classpath"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="regenerate.object.library">
+        <antcall target="cxfWSDLToJava"/>
+    </target>
+
+</project>
